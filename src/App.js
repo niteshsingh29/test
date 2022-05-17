@@ -1,15 +1,19 @@
 import "./App.css";
 import fetchdata from "./data";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Remove from "./Remove";
 
 function App() {
   const [data, setData] = useState(fetchdata);
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState(null);
+  const [isloaded, setLoaded] = useState(false);
   console.log(data);
-  // const handleClick = (i) => {
-  //   console.log("hey am clicked", i);
-  //   setColor(true);
-  // };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true);
+    }, 5000);
+  }, []);
   return (
     <div className="App">
       <div>
@@ -26,13 +30,14 @@ function App() {
                   }}
                   onClick={() => setColor(item.id)}
                 >
-                  HELLO
+                  {`${color === item.id ? "hello world" : "HELLO"}`}
                 </button>
               </div>
             </>
           );
         })}
       </div>
+      {isloaded ? <Remove data={data} /> : <h1>Loading...</h1>}
     </div>
   );
 }
